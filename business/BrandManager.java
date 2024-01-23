@@ -50,4 +50,12 @@ public class BrandManager {
         return this.brandDao.update(brand);
     }
 
+    public boolean delete(int id){
+        if(this.getById(id) == null ){
+            Helper.showMsg(id+" ID kayıtlı marka bulunamadı");
+            return false;
+        }
+        return this.brandDao.delete(id);
+    }
+
 }

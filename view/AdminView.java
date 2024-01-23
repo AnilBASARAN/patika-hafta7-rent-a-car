@@ -1,6 +1,7 @@
 package view;
 
 import business.BrandManager;
+import core.Helper;
 import entity.Brand;
 import entity.User;
 
@@ -39,7 +40,12 @@ public class AdminView extends Layout {
         this.lbl_welcome.setText("Hoşgeldiniz " + this.user.getUsername());
 
         loadBrandTable();
+        loadBrandComponent();
 
+        this.tbl_brand.setComponentPopupMenu(brandMenu);
+    }
+
+    public void loadBrandComponent(){
         this.tbl_brand.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -49,8 +55,6 @@ public class AdminView extends Layout {
         });
 
         this.brandMenu = new JPopupMenu();
-
-
         this.brandMenu.add("Yeni").addActionListener(e -> {
             // ve ben bir ekleme işlemi yaptığım için brand viewin objesine null vericem
             BrandView brandView = new BrandView(null);
@@ -63,7 +67,7 @@ public class AdminView extends Layout {
         });
 
         this.brandMenu.add("Güncelle").addActionListener(e -> {
-            int selectBrandId = Integer.parseInt(tbl_brand.getValueAt(tbl_brand.getSelectedRow(),0).toString());
+            int selectBrandId = this.getTableSelectedRow(tbl_brand,0);
             BrandView brandView = new BrandView(this.brandManager.getById(selectBrandId));
             brandView.addWindowListener(new WindowAdapter() {
                 @Override
@@ -72,12 +76,18 @@ public class AdminView extends Layout {
                 }
             });
         });
+        this.brandMenu.add("Sil").addActionListener(e -> {
+            if(Helper.confirm("sure")){
+                int selectBrandId = this.getTableSelectedRow(tbl_brand,0);
+                if(this.brandManager.delete(selectBrandId)){
+                    Helper.showMsg("done");
+                    loadBrandTable();
+                }else {
+                    Helper.showMsg("error");
+                }
+            }
 
-
-        this.brandMenu.add("Sil");
-
-        this.tbl_brand.setComponentPopupMenu(brandMenu);
-
+        });
     }
 
     public void loadBrandTable(){

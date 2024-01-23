@@ -33,5 +33,10 @@ public void createTable(DefaultTableModel model, JTable table, Object[] columns,
             model.addRow(row);
         }
     }
+
+    public int getTableSelectedRow(JTable table,int index){
+    return Integer.parseInt(table.getValueAt(table.getSelectedRow(),index).toString());
+    }
+
 }
 

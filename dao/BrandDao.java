@@ -56,6 +56,21 @@ public class BrandDao {
         return true;
     }
 
+    public boolean delete(int id){
+        //String query = "UPDATE public.brand SET brand_name = ? WHERE brand_id = ?";
+        String query = "DELETE FROM public.brand WHERE brand_id = ?";
+        try {
+            PreparedStatement pr = this.connection.prepareStatement(query);
+            pr.setInt(1, id);
+            return pr.executeUpdate() != -1;
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return true;
+    }
+
+
+
     public Brand getById( int id){
         Brand obj = null;
         String query = "SELECT * FROM public.brand WHERE brand_id = ? ";
