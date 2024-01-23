@@ -4,6 +4,8 @@ public class Brand {
     private int id;
     private String name;
 
+
+
     public Brand() {
     }
 
@@ -11,6 +13,8 @@ public class Brand {
         this.id = id;
         this.name = name;
     }
+
+
 
     public Brand(String name){
         this.name = name;
@@ -31,5 +35,7 @@ public class Brand {
     public void setName(String name) {
         this.name = name;
     }
+
+
 
 }
