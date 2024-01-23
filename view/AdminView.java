@@ -82,19 +82,7 @@ public class AdminView extends Layout {
 
     public void loadBrandTable(){
         Object[] col_brand = {"Marka ID", "Marka Adı"};
-        ArrayList<Brand> brandList = this.brandManager.findAll();
-        this.tmdl_brand.setColumnIdentifiers(col_brand);
-
-        this.tbl_brand.setModel(this.tmdl_brand);
-        this.tbl_brand.getTableHeader().setReorderingAllowed(false);
-        this.tbl_brand.setEnabled(false);
-
-        DefaultTableModel clearModel = (DefaultTableModel) tbl_brand.getModel();
-        clearModel.setRowCount(0);
-
-        for (Brand brand : brandList){
-            Object[] obj = {brand.getId(),brand.getName()};
-            this.tmdl_brand.addRow(obj);
-        }
+        ArrayList<Object[]> brandList = this.brandManager.getForTable(col_brand.length);
+        this.createTable(this.tmdl_brand,this.tbl_brand,col_brand,brandList);
     }
 }
