@@ -2,6 +2,7 @@ package business;
 
 import dao.ModelDao;
 import core.Helper;
+import entity.Brand;
 import entity.Model;
 
 import java.util.ArrayList;
@@ -56,5 +57,14 @@ public class ModelManager {
             return false;
         }
         return this.modelDao.update(model);
+    }
+
+    public ArrayList<Model> getByListBrandId(int brandId){
+        return this.modelDao.getByBrandListId(brandId);
+    }
+
+    public ArrayList<Model> searchForTable(int brandId,Model.Fuel fuel,Model.Gear gear,Model.Type type){
+        String select = "SELECT * FROM public.model"  ;
+        return this.modelDao.getByBrandListId(brandId);
     }
 }

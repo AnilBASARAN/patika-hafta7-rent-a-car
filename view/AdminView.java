@@ -2,7 +2,9 @@ package view;
 
 import business.BrandManager;
 import business.ModelManager;
+import core.ComboItem;
 import core.Helper;
+import entity.Brand;
 import entity.Model;
 import entity.User;
 
@@ -24,15 +26,21 @@ public class AdminView extends Layout {
     private JPanel pnl_model;
     private JScrollPane scrl_model;
     private JTable tbl_model;
+    private JLabel lbl_brand;
+    //  cmb_s_model_type neden yok !
+    private JComboBox cmb_s_model_brand;
+    private JComboBox cmb_s_model_type;
+    private JComboBox cmb_s_model_fuel;
+    private JButton btn_search_model;
     private User user;
     private DefaultTableModel tmdl_brand = new DefaultTableModel();
     private DefaultTableModel tmdl_model = new DefaultTableModel();
     private BrandManager brandManager;
     private ModelManager modelManager;
-
-
     private JPopupMenu brand_menu;
     private JPopupMenu model_menu;
+    private JComboBox cmb_s_model_gear;
+    // bu mu kontrol et
 
     public AdminView(User user){
         this.brandManager = new BrandManager();
@@ -50,6 +58,7 @@ public class AdminView extends Layout {
         loadBrandComponent();
         loadModelTable();
         loadModelComponent();
+        loadModelFilter();
     }
 
     private void loadModelComponent() {
@@ -78,10 +87,21 @@ public class AdminView extends Layout {
 
         });
         this.model_menu.add("Sil").addActionListener(e -> {
-
+            if(Helper.confirm("sure")){
+                int selectModelId = this.getTableSelectedRow(tbl_model,0);
+                if(this.modelManager.delete(selectModelId)){
+                    Helper.showMsg("done");
+                    loadModelTable();
+                }else {
+                    Helper.showMsg("error");
+                }
+            }
 
         });
         this.tbl_model.setComponentPopupMenu(model_menu);
+        this.btn_search_model.addActionListener(e->{
+
+        });
     }
 
     public void loadModelTable(){
@@ -102,6 +122,8 @@ public class AdminView extends Layout {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadBrandTable();
+                    loadModelTable();
+                    loadModelFilterBrand();
                 }
             });
         });
@@ -113,6 +135,8 @@ public class AdminView extends Layout {
                 @Override
                 public void windowClosed(WindowEvent e) {
                     loadBrandTable();
+                    loadModelTable();
+                    loadModelFilterBrand();
                 }
             });
         });
@@ -122,6 +146,8 @@ public class AdminView extends Layout {
                 if(this.brandManager.delete(selectBrandId)){
                     Helper.showMsg("done");
                     loadBrandTable();
+                    loadModelTable();
+                    loadModelFilterBrand();
                 }else {
                     Helper.showMsg("error");
                 }
@@ -135,6 +161,25 @@ public class AdminView extends Layout {
         Object[] col_brand = {"Marka ID", "Marka Adı"};
         ArrayList<Object[]> brandList = this.brandManager.getForTable(col_brand.length);
         this.createTable(this.tmdl_brand,this.tbl_brand,col_brand,brandList);
+    }
+
+    public void loadModelFilter(){
+        this.cmb_s_model_type.setModel(new DefaultComboBoxModel<>(Model.Type.values()));
+        this.cmb_s_model_type.setSelectedItem(null);
+        this.cmb_s_model_gear.setModel(new DefaultComboBoxModel<>(Model.Gear.values()));
+        this.cmb_s_model_gear.setSelectedItem(null);
+        this.cmb_s_model_fuel.setModel(new DefaultComboBoxModel<>(Model.Fuel.values()));
+        this.cmb_s_model_fuel.setSelectedItem(null);
+        loadModelFilterBrand();
+
+    }
+
+    public void  loadModelFilterBrand(){
+        this.cmb_s_model_brand.removeAllItems();
+        for(Brand obj : brandManager.findAll()){
+            this.cmb_s_model_brand.addItem(new ComboItem(obj.getId(),obj.getName()));
+        }
+        this.cmb_s_model_brand.setSelectedItem(null);
     }
 
 }
