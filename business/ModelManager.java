@@ -50,4 +50,11 @@ public class ModelManager {
         return this.modelDao.delete(id);
     }
 
+    public boolean update( Model model){
+        if (this.getById(model.getId()) == null){
+            Helper.showMsg(model.getId() + "ID kayıtlı model bulunamadı");
+            return false;
+        }
+        return this.modelDao.update(model);
+    }
 }

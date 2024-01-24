@@ -48,7 +48,7 @@ public class ModelDao {
     }
 
     public boolean save(Model model){
-        String query = "INSERT ONTO public.model "+
+        String query = "INSERT INTO public.model"+
                 "(" +
                 "model_brand_id,"+
                 "model_name,"+
@@ -60,7 +60,7 @@ public class ModelDao {
                 " VALUES (?,?,?,?,?,?)";
         try {
             PreparedStatement pr = con.prepareStatement(query);
-            pr.setInt(1,model.getBrand().getId());
+            pr.setInt(1,model.getBrand_id());
             pr.setString(2,model.getName());
             pr.setString(3,model.getType().toString());
             pr.setString(4,model.getYear());
