@@ -72,7 +72,7 @@ public class AdminView extends Layout {
             modelView.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent e) {
-                    loadBrandTable();
+                    loadModelTable();
                 }
             });
 
