@@ -43,6 +43,9 @@ public class AdminView extends Layout {
     private Object[] col_model;
     private JComboBox cmb_s_model_gear;
     private JButton btn_cncl_model;
+    private JPanel pnl_car;
+    private JTable tbl_car;
+    private JScrollPane scrl_car;
     // bu mu kontrol et
 
     public AdminView(User user){
