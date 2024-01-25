@@ -33,7 +33,7 @@ public class Db {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        System.out.println("hey");
+
         return instance.getConnection();
 
     }
