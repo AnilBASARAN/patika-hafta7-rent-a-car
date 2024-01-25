@@ -65,6 +65,29 @@ public class ModelManager {
 
     public ArrayList<Model> searchForTable(int brandId,Model.Fuel fuel,Model.Gear gear,Model.Type type){
         String select = "SELECT * FROM public.model"  ;
-        return this.modelDao.getByBrandListId(brandId);
+        ArrayList<String> whereList = new ArrayList<>();
+
+        if(brandId != 0){
+            whereList.add("model_brand_id = "+brandId);
+        }
+
+        if(fuel != null){
+            whereList.add("model_fuel = '"+fuel.toString()+ "'" );
+        }
+        if(gear != null){
+            whereList.add("model_gear = '"+gear.toString()+ "'" );
+        }
+        if(type != null){
+            whereList.add("model_type = '"+type.toString()+ "'" );
+        }
+
+        String whereStr = String.join(" AND ",whereList);
+        String query = select;
+        if(whereStr.length()>0){
+            query += " WHERE " + whereStr;
+        }
+
+        return this.modelDao.selectByQuery(query);
+
     }
 }
