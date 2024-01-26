@@ -6,7 +6,6 @@ import entity.Car;
 
 import java.util.ArrayList;
 import java.util.List;
-
 public class CarManager {
 
     private final CarDao carDao;
@@ -16,12 +15,6 @@ public class CarManager {
     public CarManager() {
         this.carDao = new CarDao();
     }
-
-    public CarManager(CarDao carDao) {
-        this.carDao = carDao;
-    }
-
-
     public Car getById(int id){return this.carDao.getById(id);}
 
     public ArrayList<Car> findAll(){return this.carDao.findAll();}
