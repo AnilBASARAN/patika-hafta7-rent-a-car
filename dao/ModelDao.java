@@ -34,10 +34,6 @@ public class ModelDao {
        return this.selectByQuery(query);
     }
 
-    public ArrayList<Model> getByBrandListId(int brandId){
-        return this.selectByQuery("SELECT * FROM public.model WHERE model_brand_id = "+ brandId );
-    }
-
     public ArrayList<Model> selectByQuery(String query){
         ArrayList<Model> modelList = new ArrayList<>();
         try {
@@ -49,6 +45,10 @@ public class ModelDao {
             throwables.printStackTrace();
         }
         return modelList;
+    }
+
+    public ArrayList<Model> getByBrandListId(int brandId){
+        return this.selectByQuery("SELECT * FROM public.model WHERE model_brand_id = "+ brandId );
     }
 
     public boolean save(Model model){

@@ -63,7 +63,7 @@ public class CarDao {
                 "car_model_id = ? , " +
                 "car_color = ? , "+
                 "car_km = ? , " +
-                "car_plate = = "+
+                "car_plate = ? "+
                 "WHERE car_id = ?";
         try {
             PreparedStatement pr = con.prepareStatement(query);
